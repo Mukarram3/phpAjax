@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PHP REST API CRUD</title>
+</head>
+<body>
+  <table width="500px" colspan="2" cellspacing="0" cellpadding="8px" border="1px">
+
+    <tr><td><h2>Global Data</h2></td></tr>
+    <tbody class="mytable"></tbody>
+
+  </table>
+  <br>
+
+  <table width="60%" colspan="8" cellspacing="0" cellpadding="8px" border="1px">
+
+    <tr><td><h2>country Data</h2></td></tr>
+    <tr bgcolor="pink">
+        <th>S.NO</th>
+        <th>Country</th>
+        <th>New Confirmed</th>
+        <th>New Deths</th>
+        <th>New Recovered</th>
+        <th>Total confirmed</th>
+        <th>Total Death</th>
+        <th>Total Recovered</th>
+    </tr>
+
+    <tbody class="mytable2"></tbody>
+
+  </table>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+ $(document).ready(function(){
+  $.ajax({
+
+    url: "https://api.covid19api.com/summary",
+    type: "GET",
+    data: "JSON",
+    success: function(res){
+        $.each(res.Global,function(key,value){
+
+            $(".mytable").append("<tr><td bgcolor='yellow'>"+key+"</td><td>"+value+"</td></tr>");
+            
+        });
+        var sno=1;
+        $.each(res.Countries,function(key,value){
+
+$(".mytable2").append("<tr>"+
+                     
+                      "<td>"+sno+"</td>"+
+                      "<td>"+value.Country+"</td>"+
+                      "<td>"+value.NewConfirmed+"</td>"+
+                      "<td>"+value.NewDeaths+"</td>"+
+                      "<td>"+value.NewRecovered+"</td>"+
+                      "<td>"+value.TotalConfirmed+"</td>"+
+                      "<td>"+value.TotalDeaths+"</td>"+
+                      "<td>"+value.TotalRecovered+"</td>"+
+                      "</tr>");
+sno++;
+});
+
+    }
+      
+  });
+ });
+</script>
+</body>
+</html>
